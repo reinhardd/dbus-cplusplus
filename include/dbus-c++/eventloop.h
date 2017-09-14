@@ -131,6 +131,11 @@ public:
 	 */
 	DefaultMutex();
 
+    /*!
+     * Constructor for default or recursive Mutex
+     */
+    DefaultMutex(bool recursive);
+
 	~DefaultMutex();
 
 	void lock();

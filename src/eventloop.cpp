@@ -86,6 +86,14 @@ DefaultMutex::DefaultMutex()
 	pthread_mutex_init(&_mutex, &attr);
 }
 
+DefaultMutex::DefaultMutex(bool recursive)
+{
+	pthread_mutexattr_t attr;
+	pthread_mutexattr_init(&attr);
+	pthread_mutexattr_settype(&attr, recursive ? PTHREAD_MUTEX_RECURSIVE : PTHREAD_MUTEX_DEFAULT);
+	pthread_mutex_init(&_mutex, &attr);
+}
+
 DefaultMutex::~DefaultMutex()
 {
 	pthread_mutex_destroy(&_mutex);
