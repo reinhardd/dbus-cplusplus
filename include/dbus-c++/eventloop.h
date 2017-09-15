@@ -131,10 +131,10 @@ public:
 	 */
 	DefaultMutex();
 
-    /*!
-     * Constructor for default or recursive Mutex
-     */
-    DefaultMutex(bool recursive);
+	/*!
+	 * Constructor for default or recursive Mutex
+	 */
+	DefaultMutex(bool recursive);
 
 	~DefaultMutex();
 
