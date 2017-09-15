@@ -113,6 +113,7 @@ void DefaultMutex::unlock()
 }
 
 DefaultMainLoop::DefaultMainLoop()
+	: _mutex_t(true)
 {
 	  _fdunlock[0] = -1;
 	  _fdunlock[1] = -1;
@@ -228,7 +229,6 @@ void DefaultMainLoop::dispatch()
 			{
 				(*ti)->_expiration = now_millis + (*ti)->_interval;
 			}
-
 		}
 
 		ti = tmp;
