@@ -197,7 +197,7 @@ bool is_primitive_type(const string &signature) {
 }
 
 // Remove this function when switching to C++11.
-string to_string(unsigned int v) {
+string make_string(unsigned int v) {
 	char buffer[16];
 	snprintf(buffer, sizeof(buffer), "%u", v);
 	return buffer;  // Converted to string here.
