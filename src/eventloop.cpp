@@ -27,6 +27,7 @@
 
 #include <cassert>
 #include <errno.h>
+#include <algorithm>
 
 #include <dbus-c++/eventloop.h>
 #include <dbus-c++/debug.h>
@@ -113,7 +114,6 @@ void DefaultMutex::unlock()
 }
 
 DefaultMainLoop::DefaultMainLoop()
-	: _mutex_t(true)
 {
 	  _fdunlock[0] = -1;
 	  _fdunlock[1] = -1;
@@ -223,19 +223,33 @@ void DefaultMainLoop::dispatch()
 
 		if ((*ti)->enabled() && now_millis >= (*ti)->_expiration)
 		{
+			// we need to unlock the list because calling 
+			// expired may erase the Timeout from _timeouts!
+			// expired 
+			//		->BusDispatcher::timeout_expired
+			//			-> Dispatcher::Private::on_rem_timeout 
+			//				->BusDispatcher::rem_timeout(Timeout *t)
+			_mutex_t.unlock();
+			
 			(*ti)->expired(*(*ti));
 
-			if ((*ti)->_repeat)
+			_mutex_t.lock();
+			
+			bool remains_in_list = (_timeouts.end() != std::find(_timeouts.begin(), _timeouts.end(), *ti));			
+			if (remains_in_list)
 			{
-				(*ti)->_expiration = now_millis + (*ti)->_interval;
+				if ((*ti)->_repeat)
+				{
+					(*ti)->_expiration = now_millis + (*ti)->_interval;
+				}
 			}
 		}
 
 		ti = tmp;
 	}
-
+	
 	_mutex_t.unlock();
-
+	
 	_mutex_w.lock();
 
 	for (int j = 0; j < nfd; ++j)
