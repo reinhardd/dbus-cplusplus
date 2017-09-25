@@ -81,7 +81,14 @@ install(FILES ${PROJECT_BINARY_DIR}/dbus-c++-1.pc
     DESTINATION lib/pkgconfig
 )
     
-
+install(
+    FILES 
+        tools/adaptor-stubs.tpl
+        tools/ef-adaptor-stubs.tpl
+        tools/proxy-stubs.tpl
+    DESTINATION 
+        share/dbus-c++
+)
 
 #
 # Tools
