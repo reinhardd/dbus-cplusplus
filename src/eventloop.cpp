@@ -114,6 +114,7 @@ void DefaultMutex::unlock()
 }
 
 DefaultMainLoop::DefaultMainLoop()
+	: _mutex_t(true)
 {
 	  _fdunlock[0] = -1;
 	  _fdunlock[1] = -1;
@@ -223,17 +224,12 @@ void DefaultMainLoop::dispatch()
 
 		if ((*ti)->enabled() && now_millis >= (*ti)->_expiration)
 		{
-			// we need to unlock the list because calling 
-			// expired may erase the Timeout from _timeouts!
-			// expired 
-			//		->BusDispatcher::timeout_expired
-			//			-> Dispatcher::Private::on_rem_timeout 
-			//				->BusDispatcher::rem_timeout(Timeout *t)
-			_mutex_t.unlock();
+			// we made the mutex recursive so there is no need to unlock the list anymore
+			// _mutex_t.unlock();
 			
 			(*ti)->expired(*(*ti));
 
-			_mutex_t.lock();
+			// _mutex_t.lock();
 			
 			bool remains_in_list = (_timeouts.end() != std::find(_timeouts.begin(), _timeouts.end(), *ti));			
 			if (remains_in_list)
