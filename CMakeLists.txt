@@ -114,6 +114,7 @@ if (${CTEMPL_FOUND} AND ${EXPAT_FOUND})
 #    else ()
 #        message("native build - I will add the targets later")
     endif ()
+    install (TARGETS dbusxx-xml2cpp dbusxx-introspect DESTINATION bin)
     # set(BUILD_SAMPLES TRUE)
 endif()
 
