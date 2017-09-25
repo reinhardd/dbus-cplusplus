@@ -111,8 +111,8 @@ if (${CTEMPL_FOUND} AND ${EXPAT_FOUND})
         message("${NXML2CPP-NOT-FOUND} ${NXML2CPP}")
         set(BUILD_SAMPLES NOT ${NXML2CPP-NOT-FOUND})
         message("${BUILD_SAMPLES}")
-    else ()
-        message("native build - I will add the targets later")
+#    else ()
+#        message("native build - I will add the targets later")
     endif ()
     # set(BUILD_SAMPLES TRUE)
 endif()
@@ -121,14 +121,5 @@ endif()
 # Tools
 #
 if (${BUILD_SAMPLES})
-    message(Build samples)
+    message("Build samples")
 endif()
-
-
-
-
-if (${CMAKE_CROSSCOMPILING})
-    message("cross build - skip examples")    
-else ()
-    message("native build - I will add the targets later")
-endif ()
