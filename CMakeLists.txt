@@ -14,8 +14,6 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/include
 )
 
-message("CC ${CMAKE_CROSSCOMPILING}")
-
 add_library(dbus-c++-1 SHARED
     src/connection.cpp  
     src/debug.cpp       
@@ -76,7 +74,6 @@ install(
 #
 # Tools
 #
-message("${CTEMPL_FOUND} AND ${EXPAT_FOUND}")
 if (${CTEMPL_FOUND} AND ${EXPAT_FOUND})
     add_executable(dbusxx-xml2cpp
         tools/xml.cpp 
