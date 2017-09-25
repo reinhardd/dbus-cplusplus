@@ -71,6 +71,18 @@ install(
         include/dbus-c++-1/dbus-c++
 )
 
+
+configure_file(dbus-c++.pc.in dbus-c++-1.pc
+    @ONLY
+    NEWLINE_STYLE UNIX
+)
+
+install(FILES ${PROJECT_BINARY_DIR}/dbus-c++-1.pc 
+    DESTINATION lib/pkgconfig
+)
+    
+
+
 #
 # Tools
 #
