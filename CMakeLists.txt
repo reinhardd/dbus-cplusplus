@@ -94,6 +94,9 @@ install(
 # Tools
 #
 if (${CTEMPL_FOUND} AND ${EXPAT_FOUND})
+
+    set(DataDir ${CMAKE_INSTALL_PREFIX}/share/dbus-c++)
+
     add_executable(dbusxx-xml2cpp
         tools/xml.cpp 
         tools/xml2cpp.cpp
@@ -103,7 +106,7 @@ if (${CTEMPL_FOUND} AND ${EXPAT_FOUND})
     
     set_target_properties(dbusxx-xml2cpp
         PROPERTIES
-            COMPILE_DEFINITIONS DATADIR=\"/usr/share/dbus-c++\"
+            COMPILE_DEFINITIONS DATADIR=\"${DataDir}\"
     )
     target_link_libraries(dbusxx-xml2cpp
         dbus-c++-1
